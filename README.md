@@ -1,2 +1,17 @@
 # nginx-custom
-Custom Nginx image tuned for WordPress, with Brotli compression enabled for faster asset delivery, security‑hardened defaults, and ready‑to‑use configs for PHP‑FPM upstreams. Designed for reproducible Docker workflows and optimized performance in modern container stacks.
+
+Custom Nginx Docker image optimized for WordPress.  
+Includes Brotli compression, security‑hardened defaults, and clean upstream configs for PHP‑FPM.
+
+## Features
+- Based on official `nginx:stable`
+- Brotli compression enabled for modern browsers
+- Tuned defaults for WordPress (pretty permalinks, static caching)
+- Ready to proxy requests to a PHP‑FPM container
+
+## Usage
+Build and run with Docker Compose:
+
+```bash
+docker-compose build nginx
+docker-compose up -d
