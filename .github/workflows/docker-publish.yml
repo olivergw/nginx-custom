@@ -35,6 +35,8 @@ jobs:
         run: |
           NGINX_VERSION=$(grep -oP 'FROM nginx:\K[\d.]+' Dockerfile)
           echo "version=${NGINX_VERSION}" >> $GITHUB_OUTPUT
+          echo "minor=${NGINX_VERSION%.*}" >> $GITHUB_OUTPUT
+          echo "major=${NGINX_VERSION%%.*}" >> $GITHUB_OUTPUT
 
       - name: Extract metadata
         id: meta
@@ -49,6 +51,8 @@ jobs:
             type=semver,pattern={{major}}
             type=raw,value=latest,enable={{is_default_branch}}
             type=raw,value=${{ steps.nginx_version.outputs.version }}
+            type=raw,value=${{ steps.nginx_version.outputs.minor }}
+            type=raw,value=${{ steps.nginx_version.outputs.major }}
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
