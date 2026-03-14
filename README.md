@@ -4,7 +4,7 @@ Custom Nginx Docker image optimized for WordPress.
 Includes Brotli compression, security‑hardened defaults, and clean upstream configs for PHP‑FPM.
 
 ## Features
-- Based on official `nginx:stable`
+- Based on official `nginx:1.29.6`
 - Brotli compression enabled for modern browsers
 - Tuned defaults for WordPress (pretty permalinks, static caching)
 - Ready to proxy requests to a PHP‑FPM container
