@@ -1,4 +1,4 @@
-FROM nginx:1.29.6
+FROM nginx:1.31.2
 
 # Install dependencies and build Brotli module
 RUN apt-get update && apt-get install -y \
