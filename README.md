@@ -1,13 +1,15 @@
 # nginx-custom
 
-Custom Nginx Docker image optimized for WordPress and modern web performance.  
-Includes Brotli compression, security-hardened defaults, and a configuration tuned for PHP-FPM.
+Custom Nginx Docker image for WordPress deployments that require Brotli support.
+It extends the official Nginx image with Brotli dynamic modules; deployment-specific
+configuration is supplied by the consuming project.
 
 ## Features
 - **Multi-Stage Build**: Small, secure runtime image containing only necessary modules.
-- **Brotli Compression**: Enabled via `ngx_brotli` dynamic module for modern browsers.
-- **Security Hardening**: Secure-by-default headers (XSS protection, MIME sniffing prevention, etc.) and tuned buffers.
-- **Tuned Defaults**: Optimized for WordPress/PHP-FPM workloads.
+- **Brotli Modules**: Provides the `ngx_http_brotli_filter_module` and
+  `ngx_http_brotli_static_module` dynamic modules.
+- **Official Runtime**: Retains the official Nginx image configuration unless the
+  consuming deployment mounts its own configuration.
 
 ## Tags
 
@@ -26,9 +28,19 @@ The aliases mirror the Docker Official Image tags for the selected Nginx mainlin
 
 ## Usage
 
-Build and run with Docker Compose:
+Build the image locally:
 
 ```bash
-docker compose build nginx
-docker compose up -d
+docker build -t nginx-custom:dev .
 ```
+
+Load the modules near the start of the deployment's `nginx.conf`:
+
+```nginx
+load_module /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so;
+load_module /usr/lib/nginx/modules/ngx_http_brotli_static_module.so;
+```
+
+The `sophobsessed` deployment bind-mounts its own `nginx/nginx_main.conf` and
+`nginx/wordpress.conf`; those files remain the source of truth for runtime tuning,
+headers, upstreams, and Brotli settings.

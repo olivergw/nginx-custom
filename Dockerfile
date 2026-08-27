@@ -32,5 +32,3 @@ FROM nginx:1.31.4-trixie
 COPY --from=builder /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so \
     /usr/lib/nginx/modules/ngx_http_brotli_static_module.so \
     /usr/lib/nginx/modules/
-
-COPY nginx.conf /etc/nginx/nginx.conf
