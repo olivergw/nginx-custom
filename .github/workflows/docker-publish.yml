@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/nginx-custom
+  DOCKER_IMAGE: olivergw/nginx-custom
 
 jobs:
   build:
