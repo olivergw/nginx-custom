@@ -48,3 +48,10 @@ and Brotli settings.
 Because `/etc/nginx/nginx.conf` is replaced by that bind mount, defaults declared
 in an image-level configuration do not carry into the deployment. Define all
 required headers and performance directives in the mounted deployment files.
+
+## License
+
+This repository's original Dockerfile, workflow, reference configuration, and
+documentation are licensed under the [MIT License](LICENSE). Nginx, ngx_brotli,
+and software included in the resulting image retain their respective upstream
+licenses.
