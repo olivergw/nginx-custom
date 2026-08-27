@@ -41,6 +41,10 @@ load_module /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so;
 load_module /usr/lib/nginx/modules/ngx_http_brotli_static_module.so;
 ```
 
-The `sophobsessed` deployment bind-mounts its own `nginx/nginx_main.conf` and
-`nginx/wordpress.conf`; those files remain the source of truth for runtime tuning,
-headers, upstreams, and Brotli settings.
+A consuming deployment can bind-mount its own main and virtual-host configuration;
+those files then become the source of truth for runtime tuning, headers, upstreams,
+and Brotli settings.
+
+Because `/etc/nginx/nginx.conf` is replaced by that bind mount, defaults declared
+in an image-level configuration do not carry into the deployment. Define all
+required headers and performance directives in the mounted deployment files.
