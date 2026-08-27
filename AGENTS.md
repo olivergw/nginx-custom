@@ -7,6 +7,7 @@ This repository builds a custom Nginx image containing Brotli dynamic modules.
 - `Dockerfile` compiles Brotli against the pinned official Nginx base and copies only the modules into the runtime stage.
 - `nginx.conf` is a reference configuration; consuming projects may replace `/etc/nginx/nginx.conf`.
 - `.github/workflows/docker-publish.yml` builds multi-platform images and publishes official-style aliases.
+- `.github/dependabot.yml` checks the Docker base and workflow actions weekly.
 - `README.md` documents tags, module loading, and deployment ownership.
 
 Keep site-specific virtual hosts and upstreams in their consuming deployment repositories.
@@ -19,7 +20,7 @@ docker run --rm nginx-custom:dev test -f /usr/lib/nginx/modules/ngx_http_brotli_
 docker run --rm nginx-custom:dev test -f /usr/lib/nginx/modules/ngx_http_brotli_static_module.so
 ```
 
-When changing configuration compatibility, mount the consuming project's `nginx.conf` and run `nginx -t`. Pull requests run the production-equivalent `amd64` and `arm64` build without publishing.
+When changing configuration compatibility, mount the consuming project's `nginx.conf` and run `nginx -t`. Pull requests run the production-equivalent `amd64` and `arm64` build without publishing. Dependabot opens weekly update pull requests from GitHub-hosted infrastructure.
 
 ## Coding Style & Naming Conventions
 

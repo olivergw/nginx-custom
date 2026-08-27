@@ -26,6 +26,14 @@ For the current base image `nginx:1.31.4-trixie`:
 
 The aliases mirror the Docker Official Image tags for the selected Nginx mainline Trixie image. Update both `FROM` lines together when changing versions.
 
+### Automated updates
+
+Dependabot checks the official Nginx base image every Monday at 09:05
+Europe/London and opens a pull request when a newer compatible tag is available.
+It checks GitHub Actions shortly afterwards. Pull requests build both supported
+architectures without publishing; merging a successful PR publishes the new
+image and aliases from `main`. This process runs entirely on GitHub.
+
 ## Usage
 
 Build the image locally:
