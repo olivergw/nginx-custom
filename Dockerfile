@@ -1,5 +1,5 @@
 # Build Stage
-FROM nginx:1.31.2-trixie AS builder
+FROM nginx:1.31.4-trixie AS builder
 
 # Install dependencies and build Brotli module
 RUN apt-get update && apt-get install -y \
@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     && git checkout v1.0.0rc \
     && cd /tmp \
     && NGINX_VERSION=$(nginx -v 2>&1 | grep -oP 'nginx/\K[\d.]+') \
-    && wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz \
+    && wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz \
     && tar -xzf nginx-${NGINX_VERSION}.tar.gz \
     && cd nginx-${NGINX_VERSION} \
     && ./configure --with-compat --add-dynamic-module=/tmp/ngx_brotli \
@@ -26,10 +26,11 @@ RUN apt-get update && apt-get install -y \
     && cp objs/ngx_http_brotli_static_module.so /usr/lib/nginx/modules/
 
 # Final Stage
-FROM nginx:1.31.2-trixie
+FROM nginx:1.31.4-trixie
 
 # Copy compiled Brotli modules from builder stage
-COPY --from=builder /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so /usr/lib/nginx/modules/ \
-     /usr/lib/nginx/modules/ngx_http_brotli_static_module.so /usr/lib/nginx/modules/
+COPY --from=builder /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so \
+    /usr/lib/nginx/modules/ngx_http_brotli_static_module.so \
+    /usr/lib/nginx/modules/
 
-# Note: nginx.conf and other configs are expected to be copied via docker build context or volume mounts in deployment
+COPY nginx.conf /etc/nginx/nginx.conf
