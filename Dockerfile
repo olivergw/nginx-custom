@@ -1,5 +1,5 @@
 # Build Stage
-FROM nginx:1.31.4-trixie AS builder
+FROM nginx:1.31.5-trixie AS builder
 
 # Install dependencies and build Brotli module
 RUN apt-get update && apt-get install -y \
@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y \
     && cp objs/ngx_http_brotli_static_module.so /usr/lib/nginx/modules/
 
 # Final Stage
-FROM nginx:1.31.4-trixie
+FROM nginx:1.31.5-trixie
 
 # Copy compiled Brotli modules from builder stage
 COPY --from=builder /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so \
